@@ -1,6 +1,5 @@
 package streamselambdas;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,18 +16,33 @@ public class Main {
 
         List<Pessoa> menoresDeIdade = new ArrayList<>();
 
-        for (Pessoa pessoa : pessoas) {
-            if (pessoa.idade < 18) {
-                menoresDeIdade.add(pessoa);
-            }
-        }
+
 
         List<Pessoa> menoresDeIdadeStream = pessoas
                 .stream()
-                .filter(pessoa -> pessoa.idade < 18)
+                .filter(pessoa -> pessoa.getIdade() < 18)
                 .toList();
 
-        System.out.println(menoresDeIdade.equals(menoresDeIdadeStream));
+
+        for (Pessoa p : pessoas) {
+            System.out.println(p.nome);;
+        }
+
+        pessoas.stream()
+                .map(Pessoa::getNome)
+                .forEach(System.out::println);
+
+
+        pessoas.stream()
+                .sorted((p1, p2) -> p1.getNome().compareTo(p2.getNome()))
+                .map(Pessoa::getNome)
+                .forEach(System.out::println);
+
+        /*Neste exemplo ele imprime cinco valores da Lista
+
+        int[] numeros = {8,1,2,3,4,5,6,7,8,9,10};
+
+        Arrays.stream(numeros).limit(5).forEach(System.out::println);*/
     }
 }
 
@@ -36,7 +50,27 @@ class Pessoa {
     String nome;
     int idade;
 
-    public Pessoa(String nome, int idade) {
 
+    public Pessoa(String nome, int idade) {
+        this.nome = nome;
+        this.idade = idade;
     }
+
+    public int getIdade() {
+        return idade;
+    }
+
+    public void setIdade(int idade) {
+        this.idade = idade;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+
 }
